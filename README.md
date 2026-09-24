@@ -82,3 +82,63 @@
 ---
 
 ## 📁 Project structure
+solopool-browser/
+├── manifest.json # Extension manifest (MV3)
+├── theme.css # Shared dark theme
+├── background.js # Context menu + service worker
+├── popup.html / popup.js # Popup UI
+├── options.html / options.js
+├── board.html / board.js # Leads board (Obsidian Canvas style)
+├── grid.html / grid.js # Auto relation graph
+├── newtab.html / newtab.js
+├── icons/
+│ ├── icon16.png
+│ ├── icon48.png
+│ └── icon128.png
+└── README.md
+
+---
+
+## ⚠️ How the grid check works (honest note)
+
+Browsers block extensions from reading responses from third-party sites (CORS). That limits accuracy:
+
+- **GitHub** and **Reddit** — checked via their public APIs, so `found` / `not found` is **exact**.
+- **Other platforms** — checked via an `Image` probe: the extension tries to load the profile as a resource and observes whether it loaded or errored. This **filters out obvious 404s** but is not 100% reliable — some SPAs return `200` for non-existent pages, and some sites block automated requests entirely.
+
+The `maybe` status is shown as yellow when the check was inconclusive.
+
+---
+
+## ⚖️ Legal
+
+This tool is intended for:
+- Research on **your own** accounts and domains.
+- **Authorised** security audits / bug bounty programs with written permission.
+- Educational OSINT practice on **public test targets** (e.g. `testphp.vulnweb.com`, `scanme.nmap.org`).
+
+**Do not** use it to scan or stalk individuals or systems without consent — that is illegal in most jurisdictions.
+
+---
+
+## 🛠 Tech stack
+
+- Manifest V3
+- Vanilla JS (no build step)
+- `chrome.storage.local` for persistence
+- `ResizeObserver` for correct edge rendering
+- Custom SVG rendering for graph edges
+
+---
+
+## 📜 License
+
+MIT — do whatever, just don't be evil.
+
+---
+
+## 🙏 Credits
+
+Inspired by OSINT tooling like Sherlock, Maigret, and Obsidian Canvas.
+
+Built for people who want a lightweight, private, and offline-first OSINT workspace directly in the browser.
